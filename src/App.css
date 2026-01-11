@@ -164,7 +164,15 @@ button:disabled {
   border-radius: 12px;
   padding: 12px;
   min-height: 120px;
+  word-break: break-word;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 260px;
+}
+
+.transcript-text {
   white-space: pre-wrap;
+  word-break: break-word;
 }
 
 .status {

@@ -31,7 +31,6 @@ class Transcriber {
   private async ensureModel() {
     if (this.asr) return;
     this.asr = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny.en', {
-      chunk_length_s: 30,
       quantized: true,
     });
   }
@@ -40,7 +39,7 @@ class Transcriber {
     try {
       await this.ensureModel();
       const pcm = resampleTo16k(buffer);
-      const result = await this.asr(pcm, { sampling_rate: 16000 });
+      const result = await this.asr(pcm, { sampling_rate: 16000, chunk_length_s: 30 } as any);
       const text = result?.text || '';
       if (text) return text.trim();
     } catch (error) {

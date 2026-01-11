@@ -59,7 +59,11 @@ export default function TranscriptionPanel() {
         </div>
       </div>
       <div className="transcript-box">
-        {transcript ? <pre>{transcript}</pre> : <span className="muted">No transcript yet.</span>}
+        {transcript ? (
+          <div className="transcript-text">{transcript}</div>
+        ) : (
+          <span className="muted">No transcript yet.</span>
+        )}
       </div>
     </div>
   );
