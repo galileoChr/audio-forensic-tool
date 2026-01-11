@@ -19,4 +19,3 @@ pnpm-debug.log*
 
 # Local models and large assets
 public/models/Xenova/
-!public/models/README.md
