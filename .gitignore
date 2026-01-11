@@ -18,5 +18,5 @@ pnpm-debug.log*
 *.swo
 
 # Local models and large assets
-public/models/
+public/models/Xenova/
 !public/models/README.md
