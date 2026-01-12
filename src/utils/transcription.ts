@@ -4,6 +4,13 @@ import { env, pipeline } from '@xenova/transformers';
 env.allowLocalModels = true;
 env.localModelPath = '/models';
 
+// Tune WASM backend for speed: enable SIMD/threads if available.
+env.backends.onnx.wasm = {
+  simd: true,
+  proxy: true,
+  numThreads: Math.max(2, Math.min(8, navigator?.hardwareConcurrency || 4)),
+};
+
 // Resample mono audio to 16k for Whisper models.
 function resampleTo16k(buffer: AudioBuffer): Float32Array {
   const targetRate = 16000;
@@ -30,7 +37,9 @@ class Transcriber {
 
   private async ensureModel() {
     if (this.asr) return;
-    this.asr = await pipeline('automatic-speech-recognition', 'Xenova/whisper-tiny.en', {
+    // Prefer a fast CTC model for compatibility and speed.
+    const modelId = 'Xenova/wav2vec2-base-960h';
+    this.asr = await pipeline('automatic-speech-recognition', modelId, {
       quantized: true,
     });
   }
